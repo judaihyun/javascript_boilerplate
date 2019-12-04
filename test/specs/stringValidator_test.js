@@ -56,5 +56,28 @@
     });
 
   });
+
+  describe('tel validator',() => {
+    const testCase = {
+      '010-1234-1234': true,
+      '010-123-4234': true,
+      '02-1234-1234': true,
+      '02-123-1234': true,
+      '0-1234-1234': false,
+      '0-123-1234': false,
+      '0101-123-1234': false,
+      '010-12-1234': false,
+      '010-12455-1234': false,
+      '01012551234': false,
+    }
+
+    it('tel validator', () => {
+      for(const prop in testCase)
+      {
+        console.log(`${prop} : ${testCase[prop]} => ` + telValidator(prop));
+        expect(telValidator(prop)).toEqual(testCase[prop]);
+      }
+    })
+  })
  
 });

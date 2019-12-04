@@ -22,13 +22,12 @@
     it('9자리이상 16자리이하, 특수문자, 숫자 포함이 아닐때 false를 반환', () => {
       for(let prop in testCase)
       {
+        console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop));
         expect(passwordValidator(prop)).toEqual(testCase[prop]);
       }
     })
 
 
   });
-
-  
  
 });

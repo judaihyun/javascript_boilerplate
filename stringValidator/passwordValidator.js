@@ -7,7 +7,7 @@ function passwordValidator(args)
     let rules = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,16}$/;
     if(!rules.test(args)) 
     {
-        alert(msg);
+        //alert(msg);
         return false;
     }
     return true;

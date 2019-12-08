@@ -1,83 +1,89 @@
-﻿describe('stringValidator', function(){
+﻿describe('stringValidator', () => {
+	describe('password validator', () => {
+		const testCase = {
+			'': false, // empty
+			'qwertyuiopasdfgh': false, // 16자리
+			'qwertyuiopa@fgfh': false, // 16자리 with 특수문자
+			'qwertyu3opa@fgfh': true, // 16자리 with 특수문자 + 숫자
+			'qwertyuiopasdfgh2': false, // 17자리
+			'qwertyuiopasdfgh@': false, // 17자리 with 특수문자
+			'qwertyuiopasd3gh@': false, // 17자리 with 특수문자
+			'sdfkj3ff%': true, // 9자리 with 특수문자, num
+			'sdfkjfff%': false, // 9자리 with 특수
+			'sdfkjfff8': false, // 9자리 with num
+			'sdfkjffff': false, // 9자리
+			'sdfkj3f': false, // 7자리
+			'sjf34^f': false, //7 자리 with 특수문자
+		};
 
-  describe('password validator',() => {
+		it('9자리이상 16자리이하, 숫자 포함이 아닐때 false를 반환', () => {
+			/*
+			for (const prop in testCase) {
+				console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop));
+				expect(passwordValidator(prop)).toEqual(testCase[prop]);
+			} 
+			*/expect(false).toEqual(true);
+		});
 
-    const testCase = {
-      '': false, //empty
-      'qwertyuiopasdfgh':false, //16자리
-      'qwertyuiopa@fgfh':false, //16자리 with 특수문자
-      'qwertyu3opa@fgfh':true, //16자리 with 특수문자 + 숫자
-      'qwertyuiopasdfgh2':false, //17자리
-      'qwertyuiopasdfgh@':false, //17자리 with 특수문자
-      'qwertyuiopasd3gh@':false, //17자리 with 특수문자
-      'sdfkj3ff%':true, //9자리 with 특수문자, num
-      'sdfkjfff%':false, //9자리 with 특수
-      'sdfkjfff8':false, //9자리 with num
-      'sdfkjffff':false, //9자리
-      'sdfkj3f':false, //7자리
-      'sjf34^f':false //7자리 with 특수문자
-    };
+		it('9자리이상 16자리이하, 특수문자, 숫자 포함이 아닐때 false를 반환', () => {
+			for (const prop in testCase) {
+				console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop));
+				expect(passwordValidator(prop)).toEqual(testCase[prop]);
+			}
+		});
 
-
-    it('9자리이상 16자리이하, 특수문자, 숫자 포함이 아닐때 false를 반환',() => {
-      for(const prop in testCase)
-      {
-        console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop));
-        expect(passwordValidator(prop)).toEqual(testCase[prop]);
-      }
-    });
+	
 
 
-  });
+
+	});
 
 
-  describe('email validator',() =>{
+	describe('email validator', () => {
 
-    const testCase = {
-      'mysite@ourearth.com':true,
-      'my.ownsite@ourearth.org':true,
-      'mysite@you.me.net':true,
-      'mysite.ourearth.com':false,  // [@ is not present]
-      'mysite@.com.my':false,  // [ tld (Top Level domain) can not start with dot "." ]
-      '@you.me.net':false,  // [ No character before @ ]
-      'mysite123@gmail.b':false,  // [ ".b" is not a valid tld ]
-      'mysite@.org.org':false,  // [ tld can not start with dot "." ]
-      '.mysite@mysite.org':false,  // [ an email should not be start with "." ]
-      'mysite()*@gmail.com':false,  // [ here the regular expression only allows character, digit, underscore, and dash ]
-      'mysite..1234@yahoo.com':false,  // [double dots are not allowed]
-    }
+		const testCase = {
+			'mysite@ourearth.com': true,
+			'my.ownsite@ourearth.org': true,
+			'mysite@you.me.net': true,
+			'mysite.ourearth.com': false,  // [@ is not present]
+			'mysite@.com.my': false,  // [ tld (Top Level domain) can not start with dot "." ]
+			'@you.me.net': false,  // [ No character before @ ]
+			'mysite123@gmail.b': false,  // [ ".b" is not a valid tld ]
+			'mysite@.org.org': false,  // [ tld can not start with dot "." ]
+			'.mysite@mysite.org': false,  // [ an email should not be start with "." ]
+			'mysite()*@gmail.com': false,  // [ here the regular expression only allows character, digit, underscore, and dash ]
+			'mysite..1234@yahoo.com': false,  // [double dots are not allowed]
+		}
 
-    it('email validation',() =>{
-      for(const prop in testCase)
-      {
-        console.log(`${prop} : ${testCase[prop]} => ` + emailValidator(prop));
-        expect(emailValidator(prop)).toEqual(testCase[prop]);
-      }
-    });
+		it('email validation', () => {
+			for (const prop in testCase) {
+				console.log(`${prop} : ${testCase[prop]} => ` + emailValidator(prop));
+				expect(emailValidator(prop)).toEqual(testCase[prop]);
+			}
+		});
 
-  });
+	});
 
-  describe('tel validator',() => {
-    const testCase = {
-      '010-1234-1234': true,
-      '010-123-4234': true,
-      '02-1234-1234': true,
-      '02-123-1234': true,
-      '0-1234-1234': false,
-      '0-123-1234': false,
-      '0101-123-1234': false,
-      '010-12-1234': false,
-      '010-12455-1234': false,
-      '01012551234': false,
-    }
+	describe('tel validator', () => {
+		const testCase = {
+			'010-1234-1234': true,
+			'010-123-4234': true,
+			'02-1234-1234': true,
+			'02-123-1234': true,
+			'0-1234-1234': false,
+			'0-123-1234': false,
+			'0101-123-1234': false,
+			'010-12-1234': false,
+			'010-12455-1234': false,
+			'01012551234': false,
+		}
 
-    it('tel validator', () => {
-      for(const prop in testCase)
-      {
-        console.log(`${prop} : ${testCase[prop]} => ` + telValidator(prop));
-        expect(telValidator(prop)).toEqual(testCase[prop]);
-      }
-    })
-  })
- 
+		it('tel validator', () => {
+			for (const prop in testCase) {
+				console.log(`${prop} : ${testCase[prop]} => ` + telValidator(prop));
+				expect(telValidator(prop)).toEqual(testCase[prop]);
+			}
+		})
+	})
+
 });

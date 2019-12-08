@@ -3,18 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>loginTestBed</title>
-  <script src='./authClassPattern.js'></script>
+  <!-- <script src='./authClassPattern.js'></script> -->
+  <script src='./authDelegationPattern.js'></script>
 </head>
 <body>
 <section>
-<form>
+<form id='frm'>
 	<label for='id'>id</label>
-	<input type='text' id='id' name='id'>
+	<input type='text' id='id' name='id' value='testId'>
 	<label for='pwd'>pwd</label>
-	<input type='password' id='pwd' name='pwd'>
-	<button type='submit'>submit</button>
+	<input type='password' id='pwd' name='pwd' value='testds@2P'>
+	<button type='button' id='btn'>submit</button>
 </form>
 </section>
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+
+	const btn = document.getElementById('btn');
+
+	btn.addEventListener('click', function(){
+		AuthController.checkAuth('id', 'pwd', originFuc);
+	});
+
+	function originFuc() {
+		let form = document.getElementById('frm');
+		let idStr = form.id.value;
+		let pwdStr = form.pwd.value;
+		console.log(idStr);
+		console.log(pwdStr);
+	}
+
+
+});
+</script>
 </body>
 
 </html>

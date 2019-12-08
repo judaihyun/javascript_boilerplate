@@ -7,5 +7,19 @@ pure javascript utility!
  - /stringValidator/passwordValidator.js : 패스워드 유효성 검사 ( 특수문자, 숫자, 9~16자리 모두 포함)
  
 /login : 로그인 관련
- - TODO : passwordValidator.js를 이용해서 백단의 값을 기준으로 처리하는 것....
+ - /login/passwordAuth.js : 패스워드 유효성 검사 후 callback실행
+ 
+   #### example
+ ```javascript
+btn.addEventListener('click', function(){
+		 AuthController.checkAuth('id', 'pwd', originFuc);  // checkAuth(id의 element, pwd의 element, callback함수);
+});
+
+  // 기존 제출 버튼에 대한 function
+function originFuc() {
+     let form = document.getElementById('frm');
+     let idStr = form.id.value;
+     let pwdStr = form.pwd.value;
+}
+```
 

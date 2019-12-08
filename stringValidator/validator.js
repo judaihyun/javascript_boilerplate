@@ -5,8 +5,8 @@ function passwordValidator(args, opt) {
 	}
 
 	const msg = '숫자와 영문자 조합으로 9~16자리를 사용해야 합니다.';
-	const rules = new RegExp("^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{" + obj.min + "," + obj.max + "}$");
-
+	const specialChar = '(?=.*[!@#$%^*+=-])';
+	const rules = new RegExp("^(?=.*[a-zA-Z])"+specialChar+"(?=.*[0-9]).{" + obj.min + "," + obj.max + "}$");
 	if (!rules.test(args)) {
 		// alert(msg);
 		return false;

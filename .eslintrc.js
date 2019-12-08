@@ -28,6 +28,7 @@ module.exports = {
 			"var": "never"
 		  }
 		],
+		"no-param-reassign": 0,
 		"func-names": ["error", "never"],
 		"no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
 		"prefer-arrow-callback": [ "error", { "allowNamedFunctions": false} ],

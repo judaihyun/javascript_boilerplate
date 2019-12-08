@@ -1,6 +1,6 @@
 
-# javascript_boilerplate
-pure javascript boilerplate!
+# javascript utility
+pure javascript utility!
 
 
 /stringValidator : 문자열 유효성 체크 관련

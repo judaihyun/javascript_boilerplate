@@ -21,6 +21,7 @@ const max = 16;
 			if (!(user && pw)) {
 				return this.failure('ID와 비밀번호를 입력하여 주십시오!.');
 			} 
+			// TODO return this... id validator(id);
 			return this.passwordValidator(pw);
 		},
 		showDialog: function(title, msg) {
@@ -42,7 +43,6 @@ const max = 16;
 		}
 
 	};
-
 
 	
 	const AuthController = Object.create(LoginController);

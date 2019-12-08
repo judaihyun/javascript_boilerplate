@@ -2,6 +2,7 @@ module.exports = {
 	env: {
 	  browser: true,
 	  es6: true,
+	  jasmine: true,
 	},
 	extends: [
 	  'airbnb-base',
@@ -28,6 +29,8 @@ module.exports = {
 			"var": "never"
 		  }
 		],
+		"quote-props":['error','never'],
+		"wrap-iife":[2, "any"],
 		"no-param-reassign": 0,
 		"func-names": ["error", "never"],
 		"no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],

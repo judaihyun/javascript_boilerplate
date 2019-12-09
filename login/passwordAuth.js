@@ -55,6 +55,7 @@ const max = 16;
 
 		if (this.validateEntry(user, pw)) {
 			callback();
+			//server();
 		}
 	};
 
@@ -75,9 +76,13 @@ const max = 16;
 	}
 
 
+
+	window.AuthController = AuthController;
+})();
+
+
 /*	
+
 	const auth1 = Object.create( AuthController );
 	const auth2 = Object.create( AuthController );
 */
-	window.AuthController = AuthController;
-})();

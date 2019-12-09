@@ -1,18 +1,39 @@
 
 function passwordValidator(args, opt) {
 	const obj = opt || {
-		min: 9, max: 16,
+		min: 9, max: 16, conseq : 5
 	}
 
 	const msg = '숫자와 영문자 조합으로 9~16자리를 사용해야 합니다.';
 	const specialChar = '(?=.*[!@#$%^*+=-])';
 	const rules = new RegExp("^(?=.*[a-zA-Z])"+specialChar+"(?=.*[0-9]).{" + obj.min + "," + obj.max + "}$");
 	if (!rules.test(args)) {
-		// alert(msg);
 		return false;
 	}
+	if(!checkSequential(args, obj)) return false;
 	return true;
 }
+
+function checkSequential(s, obj) {
+    // Check for sequential numerical characters
+    for(var i in s) 
+        if (+s[+i+1] == +s[i]+1 && 
+            +s[+i+2] == +s[i]+2) return false;
+    // Check for sequential alphabetical characters
+    for(var i in s) 
+        if (String.fromCharCode(s.charCodeAt(i)+1) == s[+i+1] && 
+			String.fromCharCode(s.charCodeAt(i)+2) == s[+i+2]) return false;
+	// check for consecutive numbers
+	var count = 0;
+	for(var i = 0; i < s.length; ++i)
+	{
+		if(s[i] === s[i+1]) count++;
+		else count = 0;
+		if(count >= obj.conseq - 1) return false;
+	}
+    return true;
+}
+
 
 function telValidator(args) {
 	const msg = '유효하지 않는 전화번호입니다.';

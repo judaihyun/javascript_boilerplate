@@ -1,6 +1,8 @@
 
 # javascript utility
-pure javascript utility!
+pure javascript utility! 각종 boilerplate, 자주 사용되어지는 것들
+
+
 
 
 

@@ -1,37 +1,59 @@
-
 function passwordValidator(args, opt) {
 	const obj = opt || {
-		min: 9, max: 16, conseq : 5
-	}
+		min: 9, max: 16, conseq: 5, qwerty: false, 
+		// default) min,max : 9~16자리의 입력, conseq : 5 자리 연속된 숫자(11111,33333)
+	};
 
 	const msg = '숫자와 영문자 조합으로 9~16자리를 사용해야 합니다.';
 	const specialChar = '(?=.*[!@#$%^*+=-])';
-	const rules = new RegExp("^(?=.*[a-zA-Z])"+specialChar+"(?=.*[0-9]).{" + obj.min + "," + obj.max + "}$");
+	const rules = new RegExp("^(?=.*[a-zA-Z])" + specialChar + "(?=.*[0-9]).{" + obj.min + "," + obj.max + "}$");
 	if (!rules.test(args)) {
 		return false;
 	}
-	if(!checkSequential(args, obj)) return false;
+
+	if (!checkSequential(args, obj)) return false;
+	if(obj.qwerty) {
+		return checkQwerty(args, obj);
+	}
+
 	return true;
 }
 
 function checkSequential(s, obj) {
-    // Check for sequential numerical characters
-    for(var i in s) 
-        if (+s[+i+1] == +s[i]+1 && 
-            +s[+i+2] == +s[i]+2) return false;
-    // Check for sequential alphabetical characters
-    for(var i in s) 
-        if (String.fromCharCode(s.charCodeAt(i)+1) == s[+i+1] && 
-			String.fromCharCode(s.charCodeAt(i)+2) == s[+i+2]) return false;
+	// Check for sequential numerical characters
+	for (let i in s)
+		if (+s[+i + 1] == +s[i] + 1 &&
+			+s[+i + 2] == +s[i] + 2) return false;
+	// Check for sequential alphabetical characters
+	for (let i in s)
+		if (String.fromCharCode(s.charCodeAt(i) + 1) == s[+i + 1] &&
+			String.fromCharCode(s.charCodeAt(i) + 2) == s[+i + 2]) return false;
 	// check for consecutive numbers
-	var count = 0;
-	for(var i = 0; i < s.length; ++i)
-	{
-		if(s[i] === s[i+1]) count++;
+	let count = 0;
+	for (let i = 0; i < s.length; i += 1) {
+		if (s[i] === s[i + 1]) count += 1;
 		else count = 0;
-		if(count >= obj.conseq - 1) return false;
+		if (count >= obj.conseq - 1) return false;
 	}
-    return true;
+
+	return true;
+}
+
+function checkQwerty(str, obj) {
+	var qwerty = "qwertyuiopasdfghjklzxcvbnm";
+	str = str.toLowerCase();
+	var result = '';
+	for (var qi = 0, pi = 0; pi < str.length && qi < qwerty.length; qi++) {
+		if (str.charAt(pi) === qwerty.charAt(qi)) {
+			result += str.charAt(pi);
+			pi++;
+		}
+	}
+	if (pi > obj.conseq){
+		console.log(result);
+		return false;
+	} 
+	return true;
 }
 
 

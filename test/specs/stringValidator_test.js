@@ -28,8 +28,30 @@
 			}
 		});
 
-	
+		const testCase2 = {
+			'qwerty2D%ds': false,
+			'asdqwertyD2%': true,
+			'asdqwertD2%': true,
+			'qwertyuiopasdfgh': false, // 16자리
+			'qwertyuiopa@fgfh': false, // 16자리 with 특수문자
+			'qwertyu3opa@fgfh': false, // 16자리 with 특수문자 + 숫자(qwerty)
+			'qsrtyu3opa@fg22h': true, // 16자리 with 특수문자 + 숫자
+			'asdfhpja@fg22ss': true, // 16자리 with 특수문자 + 숫자(asdf)
+			'asdkghopa@fg22ss': true, // 16자리 with 특수문자 + 숫자
+			'sdfghjkl@fg22h': false, // 16자리 with 특수문자 + 숫자
+			'goflvhxj1@': true,
+		};
 
+		const obj = {
+			min: 9, max: 16, conseq: 5, qwerty: true, 
+		};
+
+		it('키보드 연속된 문자 qwerty,  asdfgh등으로 시작하면 실패', () => {
+			for (const prop in testCase2) {
+				console.log(`${prop} : ${testCase2[prop]} => ` + passwordValidator(prop, obj));
+				expect(passwordValidator(prop, obj)).toEqual(testCase2[prop]);
+			}
+		});
 
 
 	});

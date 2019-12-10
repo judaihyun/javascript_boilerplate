@@ -11,7 +11,8 @@ pure javascript utility! 각종 boilerplate, 자주 사용되어지는 것들
 
 
 
- - /stringValidator/passwordValidator.js : 패스워드 유효성 검사 ( 특수문자, 숫자, 9~16자리 모두 포함)
+ - /stringValidator/passwordValidator.js : 패스워드 유효성 검사 
+ ( 특수문자, 숫자, 연속숫자(11111,22222등), 순차적 알파벳(abcde등), 키보드 연속문자불가(qwert,asdfg등 기본 4자리) 9~16자리 모두 포함)
  
   #### example
  ```javascript

@@ -1,13 +1,13 @@
 function passwordValidator(args, opt) {
 	const obj = opt || {
-		min: 9, max: 16, conseq: 5, qwerty: false, 
-		// default) min,max : 9~16자리의 입력, conseq : 5 자리 연속된 숫자(11111,33333)
-	};
+		min: 9, max: 16, conseq: 5, special: true,
+		msg: '숫자와 영문자,특수문자 조합으로 9~16자리를 사용해야 합니다.',
+	}
 
-	const msg = '숫자와 영문자 조합으로 9~16자리를 사용해야 합니다.';
-	const specialChar = '(?=.*[!@#$%^*+=-])';
-	const rules = new RegExp("^(?=.*[a-zA-Z])" + specialChar + "(?=.*[0-9]).{" + obj.min + "," + obj.max + "}$");
+	const specialChar = opt.special ? '(?=.*[!@#$%^*+=-])' : '';
+	const rules = new RegExp("^(?=.*[a-zA-Z])"+specialChar+"(?=.*[0-9]).{" + obj.min + "," + obj.max + "}$");
 	if (!rules.test(args)) {
+		console.log(opt.msg);
 		return false;
 	}
 

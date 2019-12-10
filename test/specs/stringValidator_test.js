@@ -22,9 +22,16 @@
 
 
 		it('9자리이상 16자리이하, 특수문자, 숫자 포함이 아닐때와 5자리 연속숫자, 동일 숫자/문자 포함시 false를 반환', () => {
+			let options = {
+				min:9,
+				max:16,
+				conseq:5,
+				special: true,
+				msg: 'test message',
+			}
 			for (const prop in testCase) {
-				console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop));
-				expect(passwordValidator(prop)).toEqual(testCase[prop]);
+				console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop, options));
+				expect(passwordValidator(prop, options)).toEqual(testCase[prop]);
 			}
 		});
 

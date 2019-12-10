@@ -29,7 +29,6 @@ module.exports = {
 			"var": "never"
 		  }
 		],
-		"quote-props":['error','never'],
 		"wrap-iife":[2, "any"],
 		"no-param-reassign": 0,
 		"func-names": ["error", "never"],

@@ -14,26 +14,51 @@
 			'sdfkjffff': false, // 9자리
 			'sdfkj3f': false, // 7자리
 			'sjf34^f': false, //7 자리 with 특수문자
+			'askdjf#sffff': false, // 동일 문자
+			'askdj1234f#s': false, // 연속된 숫자 
+			'tsd4444l#pdf': true, // 동일 숫자 
+			'tsd55555l#pdf': false, // 동일 숫자 
 		};
 
-		it('9자리이상 16자리이하, 숫자 포함이 아닐때 false를 반환', () => {
-			/*
-			for (const prop in testCase) {
-				console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop));
-				expect(passwordValidator(prop)).toEqual(testCase[prop]);
-			} 
-			*/expect(false).toEqual(true);
-		});
 
-		it('9자리이상 16자리이하, 특수문자, 숫자 포함이 아닐때 false를 반환', () => {
+		it('9자리이상 16자리이하, 특수문자, 숫자 포함이 아닐때와 5자리 연속숫자, 동일 숫자/문자 포함시 false를 반환', () => {
+			let options = {
+				min:9,
+				max:16,
+				conseq:5,
+				special: true,
+				msg: 'test message',
+			}
 			for (const prop in testCase) {
-				console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop));
-				expect(passwordValidator(prop)).toEqual(testCase[prop]);
+				console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop, options));
+				expect(passwordValidator(prop, options)).toEqual(testCase[prop]);
 			}
 		});
 
-	
+		const testCase2 = {
+			'qwerty2D%ds': false,
+			'asdqwertyD2%': true,
+			'asdqwertD2%': true,
+			'qwertyuiopasdfgh': false, // 16자리
+			'qwertyuiopa@fgfh': false, // 16자리 with 특수문자
+			'qwertyu3opa@fgfh': false, // 16자리 with 특수문자 + 숫자(qwerty)
+			'qsrtyu3opa@fg22h': true, // 16자리 with 특수문자 + 숫자
+			'asdfhpja@fg22ss': true, // 16자리 with 특수문자 + 숫자(asdf)
+			'asdkghopa@fg22ss': true, // 16자리 with 특수문자 + 숫자
+			'sdfghjkl@fg22h': false, // 16자리 with 특수문자 + 숫자
+			'goflvhxj1@': true,
+		};
 
+		const obj = {
+			min: 9, max: 16, conseq: 5, qwerty: true, 
+		};
+
+		it('키보드 연속된 문자 qwerty,  asdfgh등으로 시작하면 실패', () => {
+			for (const prop in testCase2) {
+				console.log(`${prop} : ${testCase2[prop]} => ` + passwordValidator(prop, obj));
+				expect(passwordValidator(prop, obj)).toEqual(testCase2[prop]);
+			}
+		});
 
 
 	});

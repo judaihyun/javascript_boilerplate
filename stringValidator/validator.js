@@ -2,44 +2,60 @@ function passwordValidator(args, opt) {
 	const obj = opt || {
 		min: 9, max: 16, conseq: 5, special: true,
 		msg: '숫자와 영문자,특수문자 조합으로 9~16자리를 사용해야 합니다.',
-	}
+	};
+	
 
 	const specialChar = opt.special ? '(?=.*[!@#$%^*+=-])' : '';
 	const rules = new RegExp("^(?=.*[a-zA-Z])"+specialChar+"(?=.*[0-9]).{" + obj.min + "," + obj.max + "}$");
 	if (!rules.test(args)) {
-		console.log(opt.msg);
+		console.warn(obj.msg);
 		return false;
 	}
 
-	if (!checkSequential(args, obj)) return false;
-	if(obj.qwerty) {
-		return checkQwerty(args, obj);
+	let ret = checkSequential(args, obj);
+	if(typeof ret === 'string') {
+		console.warn(ret);
+		return false;
 	}
 
+	if(!checkQwerty(args, obj)) {
+		console.warn(obj.msgQwerty || obj.msg);
+		return false;
+	}
+	console.warn(true);
 	return true;
 }
 
 function checkSequential(s, obj) {
+	let count = 1;
 	// Check for sequential numerical characters
 	for (let i in s)
 		if (+s[+i + 1] == +s[i] + 1 &&
-			+s[+i + 2] == +s[i] + 2) return false;
+			+s[+i + 2] == +s[i] + 2)
+		{
+			count += 1;
+			if(count > 3)
+				return obj.msgNumber;
+		}
 	// Check for sequential alphabetical characters
 	for (let i in s)
 		if (String.fromCharCode(s.charCodeAt(i) + 1) == s[+i + 1] &&
 			String.fromCharCode(s.charCodeAt(i) + 2) == s[+i + 2]) return false;
 	// check for consecutive numbers
-	let count = 0;
+	count = 0;
 	for (let i = 0; i < s.length; i += 1) {
-		if (s[i] === s[i + 1]) count += 1;
-		else count = 0;
-		if (count >= obj.conseq - 1) return false;
+		if (s[i] === s[i + 1]) {
+			//console.log(count);
+			count += 1;
+		} else count = 1;
+		if (count > obj.conseq - 1) return obj.msgChar || obj.msg;
 	}
 
 	return true;
 }
 
 function checkQwerty(str, obj) {
+	if(!obj.qwerty) return true;
 	var qwerty = "qwertyuiopasdfghjklzxcvbnm";
 	str = str.toLowerCase();
 	var result = '';
@@ -50,7 +66,6 @@ function checkQwerty(str, obj) {
 		}
 	}
 	if (pi > obj.conseq){
-		console.log(result);
 		return false;
 	} 
 	return true;

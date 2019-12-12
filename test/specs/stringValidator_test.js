@@ -15,13 +15,13 @@
 			'sdfkj3f': false, // 7자리
 			'sjf34^f': false, //7 자리 with 특수문자
 			'askdjf#sffff': false, // 동일 문자
-			'askdj1234f#s': false, // 연속된 숫자 
-			'tsd4444l#pdf': true, // 동일 숫자 
-			'tsd55555l#pdf': false, // 동일 숫자 
+			'askdj1234f#s': true, // 연속된 숫자 
+			'tsd444l#pdf': true, // 동일 숫자 
+			'tsd5555l#pdf': true, // 동일 숫자 
 		};
 
 
-		it('9자리이상 16자리이하, 특수문자, 숫자 포함이 아닐때와 5자리 연속숫자, 동일 숫자/문자 포함시 false를 반환', () => {
+		it('9자리이상 16자리이하, 특수문자, 숫자 포함이 아닐때와 4자리 연속숫자, 동일 숫자/문자 포함시 false를 반환', () => {
 			let options = {
 				min:9,
 				max:16,
@@ -30,7 +30,7 @@
 				msg: 'test message',
 			}
 			for (const prop in testCase) {
-				console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop, options));
+				//console.log(`${prop} : ${testCase[prop]} => ` + passwordValidator(prop, options));
 				expect(passwordValidator(prop, options)).toEqual(testCase[prop]);
 			}
 		});
@@ -49,14 +49,42 @@
 			'goflvhxj1@': true,
 		};
 
-		const obj = {
-			min: 9, max: 16, conseq: 5, qwerty: true, 
-		};
 
 		it('키보드 연속된 문자 qwerty,  asdfgh등으로 시작하면 실패', () => {
+			const obj = {
+				min: 9, max: 16, conseq: 5, qwerty: true, 
+			};
 			for (const prop in testCase2) {
 				console.log(`${prop} : ${testCase2[prop]} => ` + passwordValidator(prop, obj));
 				expect(passwordValidator(prop, obj)).toEqual(testCase2[prop]);
+			}
+		});
+
+		
+		const testCase3 = {
+			'sdfkjffff': false, // 9자리
+			'sdfkj3f': false, // 7자리
+			'sjf34^f': false, //7 자리 with 특수문자
+			'askdjf#sfffff': false, // 동일 문자
+			'tsd5555l#pdf': true, // 동일 숫자 
+			'tsd55555l#pdf': false, // 동일 숫자 
+			'askdj12345f#s': false, // 연속된 숫자 
+			'askdj1234f#s': true, // 연속된 숫자 
+			'qwerty1234f#s': false, // qwerty로 시작
+			'12qwerty34f#s': true, // qwerty로 포함
+		};
+
+		it('실패 시 해당하는 Msg 출력 함수 수행 여부(성공시 true)', () => {
+			const obj = {
+				min: 9, max: 16, conseq: 5, qwerty: true, special: true, 
+				msg: '숫자와 영문자,특수문자 조합으로 9~16자리를 사용해야 합니다.',
+				msgChar: '비밀번호에 동일한 문자/숫자사용(5자리 이상이 불가합니다.)',
+				msgNumber: '비밀번호에 연속된 숫자사용(5자리 이상이 불가합니다.)',
+				msgQwerty: '비밀번호에 키보드 연속문자(qwert등) 사용이 불가합니다.)',
+			};
+			for (const prop in testCase3) {
+				//console.log(`${prop} : ${testCase3[prop]} => ` + passwordValidator(prop, obj));
+				expect(passwordValidator(prop, obj)).toEqual(testCase3[prop]);
 			}
 		});
 

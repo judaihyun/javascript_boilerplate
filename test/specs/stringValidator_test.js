@@ -70,7 +70,7 @@
 			'tsd55555l#pdf': false, // 동일 숫자 
 			'askdj12345f#s': false, // 연속된 숫자 
 			'askdj1234f#s': true, // 연속된 숫자 
-			'qwerty1234f#s': false, // qwerty로 시작
+			'qwerty123f#s': false, // qwerty로 시작
 			'12qwerty34f#s': true, // qwerty로 포함
 		};
 
